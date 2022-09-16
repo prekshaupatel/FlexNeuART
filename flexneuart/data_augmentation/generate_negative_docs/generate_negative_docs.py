@@ -52,8 +52,9 @@ if __name__ == '__main__':
             negative_doc = query_response[0][random_number]
             negative_doc_id = negative_doc.doc_id
 
-            # TODO: get it from code
-            negative_doc_text = "get_negative_doc_text"
+            # TODO: get negative_doc_text from code using doc_id
+            fwd_index = resource_manager.getFwdIndex('text')
+            negative_doc_text = fwd_index.getDocEntryTextRaw(negative_doc_id)
 
             # set query id to a random large number
             query_id = random.randint(670000, 6700000)
