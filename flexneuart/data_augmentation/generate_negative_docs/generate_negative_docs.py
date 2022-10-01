@@ -3,7 +3,6 @@ import argparse
 import os
 import json
 import csv
-import pdb
 import sys
 
 from flexneuart import configure_classpath
@@ -48,6 +47,10 @@ if __name__ == '__main__':
     cand_prov = create_cand_provider(resource_manager, PROVIDER_TYPE_LUCENE, args.index)
     generated_query_id = args.new_query_id
 
+    query_rows = []
+    doc_row_negs = []
+    
+
     with open(args.input) as new_queries_file, open(args.output_data, 'w') as output_data, open(args.output_train_pairs, 'w') as output_train_pairs, open(args.output_qrels, 'w') as output_qrels:
         #json_array = json.load(new_queries_file
         tsv_writer = csv.writer(output_data, delimiter='\t')
@@ -82,19 +85,13 @@ if __name__ == '__main__':
             generated_query_id = generated_query_id + 1
             query_id = random.randint(generated_query_id, generated_query_id)
             
-            query_row = ['query']
-            query_row.append(query_id)
-            query_row.append(new_query)
+            query_row = ['query', query_id, new_query]
             tsv_writer.writerow(query_row)
 
-            doc_row_neg = ['doc']
-            doc_row_neg.append(negative_doc_id)
-            doc_row_neg.append(negative_doc_text)
+            doc_row_neg = ['doc', negative_doc_id, negative_doc_text]
             tsv_writer.writerow(doc_row_neg)
 
-            doc_row_pos = ['doc']
-            doc_row_pos.append(positive_doc_id)
-            doc_row_pos.append(positive_doc_text)
+            doc_row_pos = ['doc', positive_doc_id, positive_doc_text]
             tsv_writer.writerow(doc_row_pos)
 
             tsv_writer_pairs.writerow([query_id, positive_doc_id])
