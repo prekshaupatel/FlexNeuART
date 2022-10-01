@@ -4,6 +4,7 @@ import os
 import json
 import csv
 import pdb
+import sys
 
 from flexneuart import configure_classpath
 from flexneuart.retrieval import create_featextr_resource_manager
@@ -11,6 +12,15 @@ from flexneuart.retrieval.fwd_index import get_forward_index
 
 COLLECTION = os.getenv('COLLECTION')
 COLLECTION_ROOT = os.environ.get('COLLECTION_ROOT')
+
+if COLLECTION=='':
+    print("Please export COLLECTION. Example -> export COLLECTION=msmarco_pass")
+    sys.exit(1)
+
+if COLLECTION_ROOT=='':
+    print("Please export COLLECTION_ROOT. Example -> export COLLECTION_ROOT=/home/ubuntu/efs/capstone/data")
+    sys.exit(1)
+
 
 configure_classpath()
 
